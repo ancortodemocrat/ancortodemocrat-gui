@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.TextFlow?>
+<?import javafx.scene.text.Text?>
+<VBox fx:controller="ancor2gui.views.Concordancier"
+      xmlns:fx="http://javafx.com/fxml" alignment="TOP_LEFT">
+    <MenuBar>
+        <Menu fx:id="menu_fichiers" text="Fichiers">
+            <MenuItem fx:id="fichier_ouvrir" text="Ouvrir" onAction="#fichierOuvrir"></MenuItem>
+            <MenuItem fx:id="exit" text="Fermer" onAction="#Fermer"></MenuItem>
+        </Menu>
+    </MenuBar>
+
+    <SplitPane dividerPositions="0.2" orientation="HORIZONTAL">
+        <VBox>
+
+        </VBox>
+
+        <VBox>
+            <TextFlow fx:id="textflow" layoutX="22" layoutY="30" prefHeight="300" prefWidth="400">
+                <Text text="abcdefg" fill="lightgreen"/>
+                <Text text="abcdefg" fill="transparent"/>
+                <Text text="abcdefg" fill="lightgreen"/>
+                <Text text="abcdefg" fill="transparent"/>
+                <Text text="abcdefg" fill="lightcoral"/>
+            </TextFlow>
+        </VBox>
+
+    </SplitPane>
+</VBox>
