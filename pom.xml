@@ -8,5 +8,13 @@
     <artifactId>ancor2-gui</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.democrat.ancortodemocrat</groupId>
+            <artifactId>ancor2</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
 
 </project>
