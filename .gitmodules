@@ -1,0 +1,3 @@
+[submodule "ancor2"]
+	path = ancor2
+	url = git@gitlab.com:augustinvoima/ancor2.git
