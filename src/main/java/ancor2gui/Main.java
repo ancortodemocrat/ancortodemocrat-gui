@@ -1,23 +1,17 @@
 package ancor2gui;
 
-import ancor2gui.controller.Concordancier;
-import javafx.application.Application;
-import javafx.stage.Stage;
+public class Main{
 
-public class Main extends Application{
-
-    public static int WIDTH = 700;
+    public static int WIDTH = 900;
     public static int HEIGHT = 500;
+    public static Args params = null;
+    public static String args = null;
 
     public static void main(String [] args) {
-        launch(args);
-    }
-
-    @Override
-    public void start(Stage stage) throws Exception{
-        stage.setWidth(WIDTH);
-        stage.setHeight(HEIGHT);
-        new Concordancier(stage);
+        params = new Args(args);
+        args = args;
+        if(params.concordancier())
+            ConcordancierApp.main(args);
     }
 
 

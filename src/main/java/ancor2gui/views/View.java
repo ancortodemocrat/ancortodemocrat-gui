@@ -2,9 +2,13 @@ package ancor2gui.views;
 
 import ancor2gui.Main;
 import ancor2gui.controller.Controller;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ProgressIndicator;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -13,6 +17,9 @@ import java.net.URL;
 public abstract class View {
     private Controller controller;
     public Stage stage;
+
+    @FXML
+    protected ProgressIndicator footer_progress;
 
     public static View init(Controller c, Stage stage, String title, String fxml){
         Parent root = null;
@@ -40,4 +47,11 @@ public abstract class View {
 
     public abstract String getTitle();
 
+    public synchronized void setProgress(double progress) {
+        this.footer_progress.setProgress(progress);
+    }
+
+    public void bindProgress(DoubleProperty progress) {
+        this.footer_progress.progressProperty().bind(progress);
+    }
 }

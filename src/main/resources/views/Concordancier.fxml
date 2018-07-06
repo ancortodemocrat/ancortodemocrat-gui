@@ -1,35 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.TextFlow?>
-<?import javafx.scene.text.Text?>
-<VBox fx:controller="ancor2gui.views.Concordancier"
-      xmlns:fx="http://javafx.com/fxml" alignment="TOP_LEFT">
+<VBox prefHeight="268.0" prefWidth="438.0"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="ancor2gui.views.Concordancier">
     <MenuBar>
         <Menu fx:id="menu_fichiers" text="Fichiers">
-            <MenuItem fx:id="fichier_ouvrir" text="Ouvrir" onAction="#fichierOuvrir"></MenuItem>
-            <MenuItem fx:id="exit" text="Fermer" onAction="#Fermer"></MenuItem>
+            <MenuItem fx:id="fichier_ouvrir" onAction="#fichierOuvrir" text="Ouvrir" />
+            <MenuItem fx:id="exit" onAction="#Fermer" text="Fermer" />
         </Menu>
     </MenuBar>
-
-    <SplitPane dividerPositions="0.2" orientation="HORIZONTAL">
-        <VBox>
-
+    <SplitPane dividerPositions="0.2">
+        <VBox prefHeight="400.0" prefWidth="83.0">
+            <SplitPane dividerPositions="0.5" orientation="VERTICAL">
+                <VBox>
+                    <Button fx:id="file_chooser_lom" onAction="#lom_choose_load" text="Fichier LOM" />
+                    <Label fx:id="lom_lbl" labelFor="$file_chooser_lom" />
+                    <Button fx:id="file_chooser_corpus" onAction="#corpus_choose_load" text="Répertoire Corpus" />
+                    <Label fx:id="corp_lbl" labelFor="$file_chooser_corpus" />
+                    <Spinner fx:id="nb_caracteres_context" editable="true">
+                        <valueFactory>
+                            <SpinnerValueFactory.IntegerSpinnerValueFactory
+                                    min="10" max="100" initialValue="40" amountToStepBy="1" />
+                        </valueFactory>
+                    </Spinner>
+                    <Button fx:id="update"  onAction="#updateConcordancier"  text="Calculer les chaînes"/>
+                </VBox>
+                <VBox>
+                    <ListView fx:id="list_chaines" onMouseClicked="#chainSelect"/>
+                </VBox>
+            </SplitPane>
         </VBox>
 
-        <VBox>
-            <TextFlow fx:id="textflow" layoutX="22" layoutY="30" prefHeight="300" prefWidth="400">
-                <Text text="abcdefg" fill="lightgreen"/>
-                <Text text="abcdefg" fill="transparent"/>
-                <Text text="abcdefg" fill="lightgreen"/>
-                <Text text="abcdefg" fill="transparent"/>
-                <Text text="abcdefg" fill="lightcoral"/>
+        <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="ALWAYS">
+            <TextFlow fx:id="textflow" layoutX="22" layoutY="30" >
             </TextFlow>
-        </VBox>
-
+        </ScrollPane>
     </SplitPane>
+    <HBox fx:id="footer_bar">
+        <ProgressIndicator fx:id="footer_progress" progress="0.0"/>
+    </HBox>
 </VBox>
