@@ -2,7 +2,7 @@ JAR_F=./target/ancor2-gui-1.0-SNAPSHOT-jar-with-dependencies.jar
 ANCOR2GUI=java -jar $(JAR_F)
 
 all: install
-
+	cp $(JAR_F) ./ancor2-gui.jar
 sub:
 	git submodule init
 	git submodule update
