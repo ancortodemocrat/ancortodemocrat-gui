@@ -10,17 +10,20 @@ Outil graphique pour AncotToDemocrat.
 Cloner le répertoire:\
 `git clone git@gitlab.com:augustinvoima/ancor2-gui.git` \
 `cd ancor2-gui` \
-`make `
+L'executable est disponnible: `ancor2-gui.jar`
+###Compilation
+Si besoin de recompiler:\
+`make`
  
-##Utilisation
+##Commandes
 Commande générale:\
 `java -jar ancor2-gui.jar <module> [args...]`\
-Aide disponnible:
+Aide disponnible:\
 `java -jar ancor2-gui.jar --help`\
-`java -jar ancor2-gui.jar <module> --help`\
+`java -jar ancor2-gui.jar <module> --help`
 
 ##Modules
 #### Concordancier
 `java -jar ancor2-gui.jar concordancier` \
-`java -jar ancor2-gui.jar concordancier --help`\
-- Possibilité de spécifier les données à traiter lors de l'appel  
+`java -jar ancor2-gui.jar concordancier --help`
+- Possibilité de spécifier les données à traiter lors de l'appel (voir `--help`)
