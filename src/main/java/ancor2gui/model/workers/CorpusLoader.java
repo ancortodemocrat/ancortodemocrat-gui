@@ -6,8 +6,10 @@ import com.democrat.ancor.speech.Turn;
 import com.democrat.ancortodemocrat.Corpus;
 import com.democrat.ancortodemocrat.Text;
 import com.democrat.ancortodemocrat.element.Annotation;
+import com.democrat.ancortodemocrat.element.Schema;
 import com.democrat.ancortodemocrat.element.Unit;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.concurrent.Task;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class CorpusLoader implements Runnable {
+public class CorpusLoader extends Task<Void> {
     private final File rep;
     private final Callback callback;
     private final SimpleDoubleProperty progress;
@@ -30,11 +32,11 @@ public class CorpusLoader implements Runnable {
         this.callback = callback;
         this.text = new ArrayList<>();
         this.progress = new SimpleDoubleProperty();
-        view.bindProgress(this.progress);
+        view.bindProgress(this);
         this.unitParId = new HashMap<>();
     }
 
-    public void run() {
+    public Void call() {
         Corpus corpus = new Corpus(rep.getPath());
         corpus.loadAnnotation();
         corpus.loadText();
@@ -42,13 +44,17 @@ public class CorpusLoader implements Runnable {
 
         for(Annotation a : annotations) {
             List<Unit> units = a.getUnit();
+            for(Schema s : a.getSchema()){
+                units.addAll(s.getUnitList(a));
+            }
+
             Path ac_file = Paths.get(rep.getPath(),"ac_fichiers",a.getFileName()+".ac");
             Text text = null;
             try {
                 text = new Text(ac_file.toString(), String.join("",Files.readAllLines(ac_file)));
             } catch (IOException e) {
                 e.printStackTrace();
-                return;
+                return null;
             }
 
             double i = 0;
@@ -57,12 +63,13 @@ public class CorpusLoader implements Runnable {
                 this.unitParId.put(u.getId(),new AUnit(a,text,u));
                 if(u.getId().equals("TXT_IMPORTER_1355234345459"))
                     continue;
-                try {
-                    Thread.sleep(5);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                this.progress.set(i / max);
+//                try {
+//                    Thread.sleep(5);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//                this.progress.set(i / max);
+                super.updateProgress(i,max);
                 i++;
 
                 String content = text.getContentFromUnit(a,u);
@@ -75,10 +82,10 @@ public class CorpusLoader implements Runnable {
                 String line = String.join("\t",spk,content);
                 this.text.add(line);
             }
-            this.progress.set(1d);
+            super.updateProgress(1d,1d);
         }
         callback.callback(this);
-        return;
+        return null;
     }
 
     public List<String> getText() {

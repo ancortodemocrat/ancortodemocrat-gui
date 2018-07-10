@@ -8,6 +8,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Concordancier {
 
@@ -15,7 +16,10 @@ public class Concordancier {
     private File lom;
     private File corp;
 
+    boolean computing = false;
+
     private HashMap<Integer,Chaine> chainesParId;
+    private MentionsList mlist;
 
     public Concordancier(ancor2gui.views.Concordancier vue){
         this.vue = vue;
@@ -41,34 +45,40 @@ public class Concordancier {
         this.corp = corp;
     }
 
-    public synchronized void update() {
-        try {
-            if(!lom.exists())
-                throw new FileNotFoundException("file does not exists: "+lom.getPath());
-            if(!corp.isDirectory())
-                throw new FileNotFoundException("Répertoire contenant aa_fichiers et ac_fichiers attendu");
-
-
-            LomLoader ll = new LomLoader(lom, lltask -> {
-
-                MentionsList mlist = ((LomLoader) lltask).getMentionslist();
+    public void update() {
+        if (!computing) {
+            computing = true;
+            try {
+                if (!lom.exists())
+                    throw new FileNotFoundException("file does not exists: " + lom.getPath());
+                if (!corp.isDirectory())
+                    throw new FileNotFoundException("Répertoire contenant aa_fichiers et ac_fichiers attendu");
 
                 CorpusLoader cl = new CorpusLoader(
-                    corp, vue,
-                    cltask -> this.concord(mlist, ((CorpusLoader)cltask).getAUnitParId())
+                        corp, vue,
+                        cltask -> {
+                            this.concord(((CorpusLoader) cltask).getAUnitParId());
+                            computing = false;
+                        }
                 );
 
-                new Thread(cl).start();
-            });
+                LomLoader ll = new LomLoader(lom, lltask -> {
+                    mlist = ((LomLoader) lltask).getMentionslist();
+                    new Thread(cl).run();
+                });
 
-            new Thread(ll).start();
+                vue.bindProgress(cl);
+                new Thread(ll).start();
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }else{
+            System.out.println("Already computing...");
         }
     }
 
-    private void concord(MentionsList mlist, HashMap<String, AUnit> unitbyi) {
+    private void concord(HashMap<String, AUnit> unitbyi) {
         if(this.chainesParId == null)
             this.chainesParId = new HashMap<>();
         else

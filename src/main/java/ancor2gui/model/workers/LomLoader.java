@@ -8,7 +8,7 @@ import javafx.concurrent.Task;
 import java.io.*;
 import java.util.regex.Pattern;
 
-public class LomLoader implements Runnable{
+public class LomLoader extends Task<Void>{
 
     public static final String LOM_HEADER = "^ANCOR_ID\\s*CONLL_ID\\s*CHAIN_ID\\s*NUM_ANTECEDENTS_BEFORE_FEST_FIRST";
 
@@ -26,7 +26,7 @@ public class LomLoader implements Runnable{
     }
 
     @Override
-    public void run() {
+    public Void call() {
         BufferedReader in = null;
         try {
             in = new BufferedReader(new FileReader(lom));
@@ -50,6 +50,6 @@ public class LomLoader implements Runnable{
             e.printStackTrace();
         }
         callback.callback(this);
-        return;
+        return null;
     }
 }

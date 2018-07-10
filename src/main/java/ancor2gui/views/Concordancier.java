@@ -6,18 +6,18 @@ import ancor2gui.model.AUnit;
 import ancor2gui.model.Chaine;
 import ancor2gui.model.InvalidLOMException;
 import ancor2gui.model.Mention;
+import com.democrat.ancortodemocrat.element.Schema;
+import com.democrat.ancortodemocrat.element.Unit;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.Spinner;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.DirectoryChooser;
@@ -44,6 +44,10 @@ public class Concordancier extends View{
 
     @FXML
     private TextFlow textflow;
+
+    @FXML
+    private ToggleGroup select_system_gold;
+
     private File LOM;
     private File corp;
     private ArrayList<Integer> keys_order;
@@ -110,6 +114,7 @@ public class Concordancier extends View{
 
     public void updateConcordancier(ActionEvent actionEvent) {
         cleanText();
+        this.list_chaines.getItems().clear();
         model.update();
     }
 
@@ -134,30 +139,53 @@ public class Concordancier extends View{
     }
 
     public void updateChaines() {
-        this.list_chaines.getItems().clear();
-        this.keys_order = new ArrayList<>();
-        for(Integer k : this.model.getChaines().keySet()){
-            keys_order.add(k);
-            Chaine ch = this.model.getChaines().get(k);
-            try{
-                this.list_chaines.getItems().add(ch.getPremiereUnit().getText());
-            } catch (NullPointerException e){
-                System.err.println("Error for mention "+ch.getPremiereMention().getAncorID()+": no corresponding unit found");
-                e.printStackTrace();
+        Platform.runLater(()->{
+            this.list_chaines.getItems().clear();
+            this.keys_order = new ArrayList<>();
+            for(Integer k : this.model.getChaines().keySet()){
+                keys_order.add(k);
+                Chaine ch = this.model.getChaines().get(k);
+                try{
+                    this.list_chaines.getItems().add(ch.getPremiereUnit().getText());
+                } catch (NullPointerException e){
+                    System.err.println("Error for mention "+ch.getPremiereMention().getAncorID()+": no corresponding unit found");
+//                    e.printStackTrace();
+                }
             }
-        }
+        });
     }
 
     public void chainSelect(MouseEvent mouseEvent) {
         this.textflow.getChildren().clear();
         Integer k = this.list_chaines.getSelectionModel().getSelectedIndex();
         Chaine ch = this.model.getChaines().get(k);
+        String turn = null, pre = null, mention = null,  suf = null;
         for(AUnit a : ch.getAUnits()){
-            Text pre = new Text(a.getPreText(Integer.parseInt(this.nb_caracteres_context.getValue().toString())));
-            Text nex = new Text(a.getNexText(Integer.parseInt(this.nb_caracteres_context.getValue().toString()))+"\n");
-            Text mentiontext = new Text(this.model.getChaines().get(k).getPremiereUnit().getText());
-            mentiontext.setStroke(Color.BLACK);
-            this.textflow.getChildren().addAll(pre,mentiontext,nex);
+            try {
+                Font defFont = Font.font(Font.getDefault().getFamily()+" Mono");
+                turn = a.getTurn();
+                pre = a.getPreText(Integer.parseInt(this.nb_caracteres_context.getValue().toString()));
+                suf = a.getSufText(Integer.parseInt(this.nb_caracteres_context.getValue().toString())) + "\n";
+                mention = a.getText();
+                Text turnT = new Text(turn + "    ");
+                if (turn == "unkn")
+                    turnT.setStroke(Color.RED);
+                Text preT = new Text(pre + " ");
+                preT.setFont(defFont);
+                Text sufT = new Text(" " + suf);
+                sufT.setFont(defFont);
+                Text mentiontext = new Text(mention);
+                mentiontext.setFont(Font.font(defFont.getFamily(), FontWeight.BOLD, defFont.getSize()));
+
+                this.textflow.getChildren().addAll(turnT, preT, mentiontext, sufT);
+            }catch(Exception e){
+                System.out.println(turn + pre+mention+suf);
+                e.printStackTrace();
+            }
         }
+    }
+
+    public void system_gold_update(ActionEvent actionEvent) {
+
     }
 }

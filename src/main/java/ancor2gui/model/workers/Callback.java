@@ -12,5 +12,5 @@ public interface Callback {
      * Method to be called on thread exit
      * @param task Runnable calling this
      */
-    void callback(Runnable task);
+    void callback(Task<Void> task);
 }

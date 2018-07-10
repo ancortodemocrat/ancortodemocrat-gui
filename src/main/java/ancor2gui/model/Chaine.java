@@ -23,13 +23,18 @@ public class Chaine extends ArrayList<Mention>{
     }
 
     public final AUnit getPremiereUnit(){
-        return this.aUnitById.get(getPremiereMention().getAncorID());
+        AUnit au =  this.aUnitById.get(getPremiereMention().getAncorID());
+        return au;
     }
 
     public ArrayList<AUnit> getAUnits(){
         ArrayList<AUnit> aunits = new ArrayList<>();
         for(Mention m : this){
-            aunits.add(this.aUnitById.get(m.getAncorID()));
+            AUnit au = this.aUnitById.get(m.getAncorID());
+            if(au == null)
+                System.err.println("No unit found for mention id : "+ m.getAncorID());
+            else
+                aunits.add(au);
         }
         return aunits;
     }

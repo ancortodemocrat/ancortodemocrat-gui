@@ -2,8 +2,10 @@ package ancor2gui.views;
 
 import ancor2gui.Main;
 import ancor2gui.controller.Controller;
+import ancor2gui.model.workers.CorpusLoader;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -51,7 +53,7 @@ public abstract class View {
         this.footer_progress.setProgress(progress);
     }
 
-    public void bindProgress(DoubleProperty progress) {
-        this.footer_progress.progressProperty().bind(progress);
+    public void bindProgress(Task task) {
+        this.footer_progress.progressProperty().bind(task.progressProperty());
     }
 }

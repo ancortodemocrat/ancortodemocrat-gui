@@ -14,11 +14,11 @@
  </g>
  <g>
   <title>Layer 1</title>
-  <line filter="url(#svg_5_blur)" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_1" y2="15.847927" x2="339.25" y1="16.847927" x1="2.75" stroke-width="7" stroke="#666666" fill="none"/>
-  <rect rx="5" id="svg_2" height="21" width="108" y="5.847926" x="116.999998" stroke-opacity="null" stroke="#666666" fill="#666666"/>
-  <line filter="url(#svg_5_blur)" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_3" y2="56.454105" x2="339.250001" y1="57.454105" x1="2.75" stroke-width="7" stroke="#666666" fill="none"/>
-  <rect rx="5" id="svg_4" height="21" width="108" y="46.454104" x="117" stroke-opacity="null" stroke="#666666" fill="#666666"/>
-  <line filter="url(#svg_5_blur)" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_5" y2="97.666348" x2="339.250001" y1="98.666348" x1="2.75" stroke-width="7" stroke="#666666" fill="none"/>
-  <rect rx="5" id="svg_6" height="21" width="108" y="87.666346" x="117" stroke-opacity="null" stroke="#666666" fill="#666666"/>
+  <line filter="url(#svg_5_blur)" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_1" y2="15.847927" x2="339.25" y1="16.847927" x1="2.75" stroke-width="7" stroke="#ffffff" fill="none"/>
+  <rect rx="5" id="svg_2" height="21" width="108" y="5.847926" x="116.999998" stroke-opacity="null" stroke="#ffffff" fill="#ffffff"/>
+  <line filter="url(#svg_5_blur)" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_3" y2="56.454105" x2="339.250001" y1="57.454105" x1="2.75" stroke-width="7" stroke="#ffffff" fill="none"/>
+  <rect rx="5" id="svg_4" height="21" width="108" y="46.454104" x="117" stroke-opacity="null" stroke="#ffffff" fill="#ffffff"/>
+  <line filter="url(#svg_5_blur)" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_5" y2="97.666348" x2="339.250001" y1="98.666348" x1="2.75" stroke-width="7" stroke="#ffffff" fill="none"/>
+  <rect rx="5" id="svg_6" height="21" width="108" y="87.666346" x="117" stroke-opacity="null" stroke="#ffffff" fill="#ffffff"/>
  </g>
 </svg>
