@@ -8,18 +8,14 @@ sub:
 	git submodule update
 	$(MAKE) -C ancor2 dev-install
 
-$(JAR_F): sub
+package: sub
 	mvn package
-
-package: $(JAR_F)
-
 
 install: package
 	mvn install
 
 concord-test-prepare:
 	$(MAKE) -C ancor2 T6-prepare-light
-	$(MAKE) package
 
 concord-test:
 	$(ANCOR2GUI) concordancier -u \
