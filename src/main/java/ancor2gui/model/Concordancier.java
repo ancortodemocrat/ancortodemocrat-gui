@@ -2,39 +2,24 @@ package ancor2gui.model;
 
 import ancor2gui.model.workers.CorpusLoader;
 import ancor2gui.model.workers.LomLoader;
-import com.democrat.ancortodemocrat.element.Unit;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class Concordancier {
 
-    private ancor2gui.views.Concordancier vue;
+    private final ancor2gui.views.Concordancier vue;
     private File lom;
     private File corp;
 
-    boolean computing = false;
+    private boolean computing = false;
 
     private HashMap<Integer,Chaine> chainesParId;
     private MentionsList mlist;
 
     public Concordancier(ancor2gui.views.Concordancier vue){
         this.vue = vue;
-    }
-
-    public void loadCorpus() throws FileNotFoundException {
-
-        CorpusLoader loader = new CorpusLoader(
-                corp, vue,
-                task -> this.vue.addText(((CorpusLoader)task).getText())
-        );
-        Thread th = new Thread(loader);
-
-        th.start();
-
     }
 
     public void setLom(File lom) {

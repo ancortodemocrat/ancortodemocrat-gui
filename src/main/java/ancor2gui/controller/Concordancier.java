@@ -5,20 +5,18 @@ import ancor2gui.Main;
 import javafx.stage.Stage;
 
 public class Concordancier extends Controller{
-    private final ancor2gui.views.Concordancier view;
-    private final Args params;
 
     public Concordancier(Stage stage) {
-        super(stage);
-        params = Main.params;
-        this.view = ancor2gui.views.Concordancier.init(this,stage);
+        super();
+        Args params = Main.params;
+        ancor2gui.views.Concordancier view = ancor2gui.views.Concordancier.init(stage);
         if(params != null) {
             if (params.lom != null)
-                this.view.setLOM(params.lom);
+                view.setLOM(params.lom);
             if (params.corp != null)
-                this.view.setCorp(params.corp);
+                view.setCorp(params.corp);
             if(params.update)
-                this.view.updateConcordancier(null);
+                view.updateConcordancier();
         }
     }
 }

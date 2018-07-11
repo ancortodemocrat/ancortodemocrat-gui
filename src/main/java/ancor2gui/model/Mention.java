@@ -12,14 +12,17 @@ public class Mention implements Comparable<Mention> {
         return ancorID;
     }
 
+    @SuppressWarnings("unused")
     public final Integer getConllID() {
         return conllID;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public final Integer getChainID() {
         return chainID;
     }
 
+    @SuppressWarnings("unused")
     public final Integer getNum_antecedents() {
         return num_antecedents;
     }
@@ -43,8 +46,8 @@ public class Mention implements Comparable<Mention> {
 
     /**
      * Compare deux mentions: ordre dans le texte
-     * @param mention
-     * @return
+     * @param mention la mention avec laquelle comparer this
+     * @return résultat de la comparaison
      */
     @Override
     public int compareTo(Mention mention) {

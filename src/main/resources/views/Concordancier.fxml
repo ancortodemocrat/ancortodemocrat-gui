@@ -8,17 +8,19 @@
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="ancor2gui.views.Concordancier">
     <MenuBar>
-        <Menu fx:id="menu_fichiers" text="Fichiers">
-            <MenuItem fx:id="fichier_ouvrir" onAction="#fichierOuvrir" text="Ouvrir" />
-            <MenuItem fx:id="exit" onAction="#Fermer" text="Fermer" />
+        <Menu text="Fichiers">
+            <MenuItem text="Ouvrir" />
+            <MenuItem text="Fermer" />
         </Menu>
     </MenuBar>
     <SplitPane dividerPositions="0.2">
         <VBox prefHeight="400.0" prefWidth="83.0">
             <SplitPane dividerPositions="0.5" orientation="VERTICAL">
                 <VBox>
+                    <!--suppress JavaFxUnresolvedFxIdReference -->
                     <Button fx:id="file_chooser_lom" onAction="#lom_choose_load" text="Fichier LOM" />
                     <Label fx:id="lom_lbl" labelFor="$file_chooser_lom" />
+                    <!--suppress JavaFxUnresolvedFxIdReference -->
                     <Button fx:id="file_chooser_corpus" onAction="#corpus_choose_load" text="Répertoire Corpus" />
                     <Label fx:id="corp_lbl" labelFor="$file_chooser_corpus" />
                     <Spinner fx:id="nb_caracteres_context" editable="true">
@@ -27,7 +29,7 @@
                                     min="10" max="100" initialValue="40" amountToStepBy="1" />
                         </valueFactory>
                     </Spinner>
-                    <Button fx:id="update"  onAction="#updateConcordancier"  text="Calculer les chaînes"/>
+                    <Button onAction="#updateConcordancier"  text="Calculer les chaînes"/>
                 </VBox>
                 <VBox>
                     <ListView fx:id="list_chaines" onMouseClicked="#chainSelect"/>
@@ -40,7 +42,7 @@
             </TextFlow>
         </ScrollPane>
     </SplitPane>
-    <HBox fx:id="footer_bar">
+    <HBox>
         <ProgressIndicator fx:id="footer_progress" progress="0.0"/>
     </HBox>
 </VBox>

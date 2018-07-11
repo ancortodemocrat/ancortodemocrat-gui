@@ -9,8 +9,6 @@ import static ancor2gui.Main.HEIGHT;
 import static ancor2gui.Main.WIDTH;
 
 public class ConcordancierApp extends Application{
-    private static String[] args;
-    private static Args params;
 
     public static void main(String[] args){
         launch(args);

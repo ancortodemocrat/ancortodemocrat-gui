@@ -1,20 +1,12 @@
 package ancor2gui.views;
 
-import ancor2gui.Args;
-import ancor2gui.controller.Controller;
 import ancor2gui.model.AUnit;
 import ancor2gui.model.Chaine;
-import ancor2gui.model.InvalidLOMException;
-import ancor2gui.model.Mention;
-import com.democrat.ancortodemocrat.element.Schema;
-import com.democrat.ancortodemocrat.element.Unit;
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.Spinner;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -23,17 +15,14 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import weka.core.stopwords.Null;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Concordancier extends View{
 
     public Spinner nb_caracteres_context;
-    public ListView list_chaines;
+    public ListView<String> list_chaines;
     private ancor2gui.model.Concordancier model;
 
     @FXML
@@ -45,11 +34,6 @@ public class Concordancier extends View{
     @FXML
     private TextFlow textflow;
 
-    @FXML
-    private ToggleGroup select_system_gold;
-
-    private File LOM;
-    private File corp;
     private ArrayList<Integer> keys_order;
 
 
@@ -57,19 +41,15 @@ public class Concordancier extends View{
         return "Concordancier";
     }
 
-    public static Concordancier init(Controller c, Stage stage){
-        Concordancier view = (Concordancier) View.init(c,stage, "Concordancier", "Concordancier.fxml");
+    public static Concordancier init(Stage stage){
+        Concordancier view = (Concordancier) View.init(stage, "Concordancier.fxml");
 
         view.model = new ancor2gui.model.Concordancier(view);
         return view;
 
     }
 
-    public void fichierOuvrir(ActionEvent actionEvent){
-
-    }
-
-    public void lom_choose_load(ActionEvent actionEvent) {
+    public void lom_choose_load() {
         FileChooser fchoo = new FileChooser();
         fchoo.setInitialDirectory(new File("/tmp/rjc18/t6/chaines/"));
         fchoo.setTitle("Ouvrir un fichier csv: Liste de mentions");
@@ -84,7 +64,7 @@ public class Concordancier extends View{
         model.setLom(lom);
     }
 
-    public void corpus_choose_load(ActionEvent actionEvent) {
+    public void corpus_choose_load() {
         DirectoryChooser dchoo = new DirectoryChooser();
         dchoo.setInitialDirectory(new File("/tp/Augustin/Ancor/"));
         dchoo.setTitle("Ouvrir un corpus: Répertoire contenant aa_fichiers/ at ac_fichiers/");
@@ -95,24 +75,7 @@ public class Concordancier extends View{
         model.setCorp(corp);
     }
 
-    public void Fermer(ActionEvent actionEvent) {
-    }
-
-    public void addText(List<String> text) {
-
-        List<Node> childs = this.textflow.getChildren();
-        Platform.runLater(()-> {
-            for (String s : text) {
-                Text t = new Text(s+"\n");
-                t.setFill(Color.BLACK);
-                t.setFont(new Font(12));
-                childs.add(t);
-            }
-        });
-        this.textflow.autosize();
-    }
-
-    public void updateConcordancier(ActionEvent actionEvent) {
+    public void updateConcordancier() {
         cleanText();
         this.list_chaines.getItems().clear();
         model.update();
@@ -134,10 +97,6 @@ public class Concordancier extends View{
         System.out.println("corp set to "+corp);
     }
 
-    public Integer getContextLen(){
-        return Integer.parseInt(this.nb_caracteres_context.getValue().toString());
-    }
-
     public void updateChaines() {
         Platform.runLater(()->{
             this.list_chaines.getItems().clear();
@@ -155,10 +114,10 @@ public class Concordancier extends View{
         });
     }
 
-    public void chainSelect(MouseEvent mouseEvent) {
+    public void chainSelect() {
         this.textflow.getChildren().clear();
         Integer k = this.list_chaines.getSelectionModel().getSelectedIndex();
-        Chaine ch = this.model.getChaines().get(k);
+        Chaine ch = this.model.getChaines().get(keys_order.get(k));
         String turn = null, pre = null, mention = null,  suf = null;
         for(AUnit a : ch.getAUnits()){
             try {
@@ -168,7 +127,7 @@ public class Concordancier extends View{
                 suf = a.getSufText(Integer.parseInt(this.nb_caracteres_context.getValue().toString())) + "\n";
                 mention = a.getText();
                 Text turnT = new Text(turn + "    ");
-                if (turn == "unkn")
+                if (turn.equals("unkn"))
                     turnT.setStroke(Color.RED);
                 Text preT = new Text(pre + " ");
                 preT.setFont(defFont);
@@ -183,9 +142,5 @@ public class Concordancier extends View{
                 e.printStackTrace();
             }
         }
-    }
-
-    public void system_gold_update(ActionEvent actionEvent) {
-
     }
 }

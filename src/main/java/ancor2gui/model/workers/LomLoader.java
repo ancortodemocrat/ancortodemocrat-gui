@@ -10,15 +10,15 @@ import java.util.regex.Pattern;
 
 public class LomLoader extends Task<Void>{
 
-    public static final String LOM_HEADER = "^ANCOR_ID\\s*CONLL_ID\\s*CHAIN_ID\\s*NUM_ANTECEDENTS_BEFORE_FEST_FIRST";
+    private static final String LOM_HEADER = "^ANCOR_ID\\s*CONLL_ID\\s*CHAIN_ID\\s*NUM_ANTECEDENTS_BEFORE_FEST_FIRST";
 
     public MentionsList getMentionslist() {
         return mentionslist;
     }
 
     private MentionsList mentionslist;
-    private File lom;
-    private Callback callback;
+    private final File lom;
+    private final Callback callback;
 
     public LomLoader(File lom, Callback callback){
         this.lom = lom;
@@ -33,8 +33,10 @@ public class LomLoader extends Task<Void>{
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        String line = null;
+        assert in != null;
+        String line;
         mentionslist = new MentionsList();
+        //noinspection TryWithIdenticalCatches
         try {
             line = in.readLine();
             if(!Pattern.matches(LOM_HEADER, line)){

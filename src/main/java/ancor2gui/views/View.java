@@ -1,10 +1,6 @@
 package ancor2gui.views;
 
 import ancor2gui.Main;
-import ancor2gui.controller.Controller;
-import ancor2gui.model.workers.CorpusLoader;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,13 +13,12 @@ import java.io.IOException;
 import java.net.URL;
 
 public abstract class View {
-    private Controller controller;
-    public Stage stage;
+    Stage stage;
 
     @FXML
     protected ProgressIndicator footer_progress;
 
-    public static View init(Controller c, Stage stage, String title, String fxml){
+    static View init(Stage stage, @SuppressWarnings("SameParameterValue") String fxml){
         Parent root = null;
         URL location = View.class.getResource("/views/" + fxml);
         FXMLLoader fxmlLoader = new FXMLLoader(location);
@@ -32,26 +27,19 @@ public abstract class View {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        View vue = fxmlLoader.getController();
 
+        assert root != null;
         stage.setScene(new Scene(root, Main.WIDTH, Main.HEIGHT));
-        stage.setTitle(title);
+        stage.setTitle(vue.getTitle());
         stage.show();
 
-        View vue = fxmlLoader.getController();
-        vue.setController(c);
         vue.stage = stage;
         return vue;
     }
 
-    public void setController(Controller controller) {
-        this.controller = controller;
-    }
-
-    public abstract String getTitle();
-
-    public synchronized void setProgress(double progress) {
-        this.footer_progress.setProgress(progress);
-    }
+    @SuppressWarnings("SameReturnValue")
+    protected abstract String getTitle();
 
     public void bindProgress(Task task) {
         this.footer_progress.progressProperty().bind(task.progressProperty());

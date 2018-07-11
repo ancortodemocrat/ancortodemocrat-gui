@@ -5,14 +5,13 @@ import com.democrat.ancortodemocrat.Text;
 import com.democrat.ancortodemocrat.element.Annotation;
 import com.democrat.ancortodemocrat.element.Schema;
 import com.democrat.ancortodemocrat.element.Unit;
-import javafx.scene.control.Spinner;
 
 /**
  * Extension de la classe Unit contenant l'annotation correspondante
  */
 public class AUnit extends Unit{
     private final Annotation a;
-    private Text text;
+    private final Text text;
 
     public AUnit(Annotation a, Text text, Unit u){
         super();
@@ -30,12 +29,6 @@ public class AUnit extends Unit{
         if((Unit)this instanceof Schema)
             return this.text.getContentFromUnit(this.a,((Schema)(Unit)this).getUnitWhereFeatureNotNull(a));
         return this.text.getContentFromUnit(this.a,this);
-    }
-
-    public String getContextText(Integer context_len){
-        return this.text.getContent().substring(
-                this.getPositioning().getStart().getSinglePosition().getIndex() - context_len,
-                this.getPositioning().getEnd().getSinglePosition().getIndex() +context_len);
     }
 
     public String getPreText(Integer context_len) {

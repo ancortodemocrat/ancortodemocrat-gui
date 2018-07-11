@@ -7,12 +7,12 @@ import java.util.Arrays;
 
 public class Args extends Options {
     private static final String CONCORDANCIER_ARG = "concordancier";
-    public String module = null;
+    private String module = null;
     public File lom = null;
     public File corp = null;
     public boolean update;
 
-    public Args(String [] args) throws IllegalArgumentException {
+    Args(String[] args) throws IllegalArgumentException {
         super();
         System.out.println(Arrays.toString(args));
         if (args.length == 0){
@@ -89,7 +89,7 @@ public class Args extends Options {
         System.exit(1);
     }
 
-    public boolean concordancier(){
+    boolean concordancier(){
         return module.equals(CONCORDANCIER_ARG);
     }
 }

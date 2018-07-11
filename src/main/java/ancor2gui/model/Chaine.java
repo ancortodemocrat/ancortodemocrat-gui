@@ -1,9 +1,5 @@
 package ancor2gui.model;
 
-import com.democrat.ancortodemocrat.element.Unit;
-import javafx.collections.transformation.SortedList;
-import javafx.scene.text.TextFlow;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -11,7 +7,7 @@ import java.util.HashMap;
 public class Chaine extends ArrayList<Mention>{
     private final HashMap<String, AUnit> aUnitById;
 
-    public Chaine(HashMap<String, AUnit> aUnitbyi, Mention mention){
+    Chaine(HashMap<String, AUnit> aUnitbyi, Mention mention){
         super();
         this.aUnitById=aUnitbyi;
         this.add(mention);
@@ -23,8 +19,7 @@ public class Chaine extends ArrayList<Mention>{
     }
 
     public final AUnit getPremiereUnit(){
-        AUnit au =  this.aUnitById.get(getPremiereMention().getAncorID());
-        return au;
+        return this.aUnitById.get(getPremiereMention().getAncorID());
     }
 
     public ArrayList<AUnit> getAUnits(){
