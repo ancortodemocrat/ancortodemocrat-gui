@@ -19,6 +19,10 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.util.ArrayList;
 
+/**
+ * Concordancier View Manager
+ * @author Augustin Voisin-Marras
+ */
 public class Concordancier extends View{
 
     public Spinner nb_caracteres_context;
@@ -36,11 +40,16 @@ public class Concordancier extends View{
 
     private ArrayList<Integer> keys_order;
 
-
+    @Override
     public String getTitle() {
         return "Concordancier";
     }
 
+    /**
+     * Initialisation of the concordancier
+     * @param stage The stage to display the concordancier on
+     * @return  The Concordancier view created
+     */
     public static Concordancier init(Stage stage){
         Concordancier view = (Concordancier) View.init(stage, "Concordancier.fxml");
 
@@ -49,6 +58,9 @@ public class Concordancier extends View{
 
     }
 
+    /**
+     * Display File manager to choose List of mention file
+     */
     public void lom_choose_load() {
         FileChooser fchoo = new FileChooser();
         fchoo.setInitialDirectory(new File("/tmp/rjc18/t6/chaines/"));
@@ -64,6 +76,9 @@ public class Concordancier extends View{
         model.setLom(lom);
     }
 
+    /**
+     * Display file manager to choose corpus repertory
+     */
     public void corpus_choose_load() {
         DirectoryChooser dchoo = new DirectoryChooser();
         dchoo.setInitialDirectory(new File("/tp/Augustin/Ancor/"));
@@ -75,15 +90,22 @@ public class Concordancier extends View{
         model.setCorp(corp);
     }
 
+    /**
+     * Update Concordancier's list of chains
+     */
     public void updateConcordancier() {
         cleanText();
         this.list_chaines.getItems().clear();
         model.update();
     }
 
+    /**
+     * Clean the text from the concordancier text
+     */
     private void cleanText() {
         Platform.runLater(()-> textflow.getChildren().clear());
     }
+
 
     public void setLOM(File LOM) {
         this.lom_lbl.setText(LOM.getPath());
@@ -97,6 +119,9 @@ public class Concordancier extends View{
         System.out.println("corp set to "+corp);
     }
 
+    /**
+     * Update the displayed chains in the view (display model's chains)
+     */
     public void updateChaines() {
         Platform.runLater(()->{
             this.list_chaines.getItems().clear();
@@ -114,6 +139,9 @@ public class Concordancier extends View{
         });
     }
 
+    /**
+     * Update displayed concordancier with the chain selected in chain list
+     */
     public void chainSelect() {
         this.textflow.getChildren().clear();
         Integer k = this.list_chaines.getSelectionModel().getSelectedIndex();

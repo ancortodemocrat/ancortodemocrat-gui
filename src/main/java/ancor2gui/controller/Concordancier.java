@@ -4,8 +4,15 @@ import ancor2gui.Args;
 import ancor2gui.Main;
 import javafx.stage.Stage;
 
+/**
+ * Controller for Concordancier module
+ * @author Augustin Voisin-Marras
+ */
 public class Concordancier extends Controller{
-
+    /**
+     * Create Concordancier window
+     * @param stage The stage to display the concordancier in
+     */
     public Concordancier(Stage stage) {
         super();
         Args params = Main.params;

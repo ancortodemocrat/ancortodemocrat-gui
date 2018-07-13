@@ -3,25 +3,45 @@ package ancor2gui.model;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Mention
+ * @author Augustin Voisin-Marras
+ */
 public class Mention implements Comparable<Mention> {
     private final String ancorID;
     private final Integer conllID;
     private final Integer chainID;
 
+    /**
+     *
+     * @return The AncorID of the mention
+     */
     public final String getAncorID() {
         return ancorID;
     }
 
+    /**
+     *
+     * @return The ConllID of the mention (ID contained in connll files)
+     */
     @SuppressWarnings("unused")
     public final Integer getConllID() {
         return conllID;
     }
 
+    /**
+     *
+     * @return The chain ID of the mention
+     */
     @SuppressWarnings("WeakerAccess")
     public final Integer getChainID() {
         return chainID;
     }
 
+    /**
+     *
+     * @return The number of possible antecedents before best-first choice during chaining
+     */
     @SuppressWarnings("unused")
     public final Integer getNum_antecedents() {
         return num_antecedents;
@@ -31,6 +51,12 @@ public class Mention implements Comparable<Mention> {
     private static final String MENTION_LINE = "^([a-zA-Z0-9_]+)\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)";
 
 
+    /**
+     * Constructor
+     * @param lom_line LOM-file line to parse for creating this mention
+     * @param n Line number. Used for error messages. May be set to a static value.
+     * @throws InvalidLOMException If not able to parse
+     */
     public Mention(String lom_line, int n) throws InvalidLOMException {
         Pattern p = Pattern.compile(MENTION_LINE);
         Matcher m = p.matcher(lom_line);

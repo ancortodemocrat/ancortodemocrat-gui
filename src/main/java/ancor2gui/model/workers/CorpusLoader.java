@@ -17,11 +17,21 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Task loading corpus in map of Units
+ * @author Augustin Voisin-Marras
+ */
 public class CorpusLoader extends Task<Void> {
     private final File rep;
     private final Callback callback;
     private final HashMap<String,AUnit> unitParId;
 
+    /**
+     * Constructor
+     * @param rep Corpus path: should contain aa_fichiers and ac_fichiers folders
+     * @param view View calling this task. Used to bind this task's progressProperty.
+     * @param callback Callback implementation. Ran when loading is terminated.
+     */
     public CorpusLoader(File rep, final View view, Callback callback){
         this.rep = rep;
         this.callback = callback;
@@ -29,6 +39,10 @@ public class CorpusLoader extends Task<Void> {
         this.unitParId = new HashMap<>();
     }
 
+    /**
+     * Task's core method
+     * @return null
+     */
     public Void call() {
         Corpus corpus = new Corpus(rep.getPath());
         corpus.loadAnnotation();
@@ -65,6 +79,10 @@ public class CorpusLoader extends Task<Void> {
         return null;
     }
 
+    /**
+     * Getter for the units map
+     * @return Units map (each unit associated with it's AncorID)
+     */
     public HashMap<String, AUnit> getAUnitParId() {
         return unitParId;
     }

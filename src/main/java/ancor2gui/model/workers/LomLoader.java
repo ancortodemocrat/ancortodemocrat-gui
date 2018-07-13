@@ -8,10 +8,18 @@ import javafx.concurrent.Task;
 import java.io.*;
 import java.util.regex.Pattern;
 
+/**
+ * Task loading list of mentions (coming from ancor2 core)
+ * @author Augustin Voisin-Marras
+ */
 public class LomLoader extends Task<Void>{
 
     private static final String LOM_HEADER = "^ANCOR_ID\\s*CONLL_ID\\s*CHAIN_ID\\s*NUM_ANTECEDENTS_BEFORE_FEST_FIRST";
 
+    /**
+     * Getter for the mention list
+     * @return The mention list
+     */
     public MentionsList getMentionslist() {
         return mentionslist;
     }
@@ -20,12 +28,21 @@ public class LomLoader extends Task<Void>{
     private final File lom;
     private final Callback callback;
 
+
+    /**
+     * Create a LomLoader task
+     * @param lom List of mention file
+     * @param callback Callback implementation. Ran when loading is terminated.
+     */
     public LomLoader(File lom, Callback callback){
         this.lom = lom;
         this.callback = callback;
     }
 
-    @Override
+    /**
+     * Task's core method
+     * @return null
+     */
     public Void call() {
         BufferedReader in = null;
         try {

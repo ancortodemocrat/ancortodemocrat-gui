@@ -5,6 +5,7 @@ import javafx.concurrent.Task;
 /**
  * Interface for calling a callback after thread execution.
  * Suitable for extracting results and displaying them in the gui
+ * @author Augustin Voisin-Marras
  */
 public interface Callback {
 
