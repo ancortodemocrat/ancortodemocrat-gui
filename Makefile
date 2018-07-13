@@ -1,21 +1,15 @@
 JAR_F=./target/ancor2-gui-1.0-SNAPSHOT-jar-with-dependencies.jar
+JAR_exec=./ancor2-gui.jar
 ANCOR2GUI=java -jar $(JAR_F)
 
 all: package
-	cp $(JAR_F) ./ancor2-gui.jar
-sub:
-	git submodule init
-	git submodule update
-	$(MAKE) -C ancor2 dev-install
+	cp $(JAR_F) $(JAR_exec)
 
-package: sub
+package:
 	mvn package
 
 install: package
 	mvn install
-
-concord-test-prepare:
-	$(MAKE) -C ancor2 T6-prepare-light
 
 concord-test:
 	$(ANCOR2GUI) concordancier -u \
