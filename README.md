@@ -8,8 +8,8 @@ Outil graphique pour AncotToDemocrat.
 
 ## Installation  
 Cloner le répertoire:  
-`git clone git@gitlab.com:augustinvoima/ancor2-gui.git`  
-`cd ancor2-gui`  
+`git clone https://github.com/ancortodemocrat/ancortodemocrat-gui.git`  
+`cd ancortodemocrat-gui`  
 L'executable est disponnible: `ancor2-gui.jar`  
 ### Compilation  
 Si besoin de recompiler:  
